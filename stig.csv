@@ -1,0 +1,115 @@
+stigid,stigcategory,stigstatus,stigdescr,stigtarget,stigvalue,stigmethod,stigsettingname
+ESXI_65_000001,2,open,Enable lockdown mode,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000004,2,not a finding,Configure syslog,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_000005,2,not a finding,lock account after 3 failed attempts,3,,advanced,Security.AccountLockFailures
+ESXI_65_000006,2,not a finding,unlock account after 15 minutes,900,,advanced,Security.AccountUnlockTime
+ESXI_65_000007,2,not a finding,display notice and consent banner: banner,"
+This system is for the use of authorized users only.
+Individuals using this computer system without
+authority or in excess of their authority are subject
+to having all of their activities on this system
+monitored and recorded by system personnel. Anyone
+using this system expressly consents to such
+monitoring and is advised that if such monitoring
+reveals possible evidence of criminal activity
+system personnel may provide the evidence of such
+monitoring to law enforcement officials.",,advanced,Annotations.WelcomeMessage
+ESXI_65_000008,2,not a finding,display notice and consent banner: /etc/issue,"
+This system is for the use of authorized users only.
+Individuals using this computer system without
+authority or in excess of their authority are subject
+to having all of their activities on this system
+monitored and recorded by system personnel. Anyone
+using this system expressly consents to such
+monitoring and is advised that if such monitoring
+reveals possible evidence of criminal activity
+system personnel may provide the evidence of such
+monitoring to law enforcement officials.",,advanced,Config.Etc.issue
+ESXI_65_000009,2,not a finding,display notice and consent banner: /etc/ssh/sshd_config,Banner /etc/issue,,ssh,"grep -i ""^Banner"" /etc/ssh/sshd_config"
+ESXI_65_000010,2,not a finding,ssh ciphers,"Ciphers aes128-ctr,aes192-ctr,aes256-ctr",,ssh,"grep ""^Ciphers"" /etc/ssh/sshd_config"
+ESXI_65_000011,2,not a finding,ssh protocol 2 only,Protocol 2,,ssh,"grep -i ""^Protocol"" /etc/ssh/sshd_config"
+ESXI_65_000012,1,not a finding,ssh: ignore rhosts,IgnoreRhosts yes,,ssh,"grep -i ""^IgnoreRhosts"" /etc/ssh/sshd_config"
+ESXI_65_000013,2,not a finding,ssh disable hostbasedauthentication,HostbasedAuthentication no,,ssh,"grep -i ""^HostbasedAuthentication"" /etc/ssh/sshd_config"
+ESXI_65_000015,1,not a finding,ssh disable empty passwords,PermitEmptyPasswords no,,ssh,"grep -i ""^PermitEmptyPasswords"" /etc/ssh/sshd_config"
+ESXI_65_000016,2,not a finding,ssh disable user environment settings,PermitUserEnvironment no,,ssh,"grep -i ""^PermitUserEnvironment"" /etc/ssh/sshd_config"
+ESXI_65_000017,2,not a finding,ssh: use only secure MACs,"MACs hmac-sha1,hmac-sha2-256,hmac-sha2-512",,ssh,"grep -i ""^MACs"" /etc/ssh/sshd_config"
+ESXI_65_000020,2,not a finding,ssh: must perform strict mode checking of home directory configuration files.,StrictModes yes,,ssh,"grep -i ""^StrictModes"" /etc/ssh/sshd_config"
+ESXI_65_000021,2,not a finding,ssh: disable compression,Compression no,,ssh,"grep -i ""^Compression"" /etc/ssh/sshd_config"
+ESXI_65_000023,2,not a finding,ssh: disable X11 forwarding,X11Forwarding no,,ssh,"grep -i ""^X11Forwarding"" /etc/ssh/sshd_config"
+ESXI_65_000024,2,not a finding,ssh: disable client environment variables,AcceptEnv,,ssh,"grep -i ""^AcceptEnv"" /etc/ssh/sshd_config"
+ESXI_65_000025,2,not a finding,ssh: disable tunnels,PermitTunnel no,,ssh,"grep -i ""^PermitTunnel"" /etc/ssh/sshd_config"
+ESXI_65_000028,2,not a finding,ssh: limit connections to a a single session,MaxSessions 1,,ssh,"grep -i ""^MaxSessions"" /etc/ssh/sshd_config"
+ESXI_65_000029,2,not a finding,ssh: remove keys from authorized_keys,null,,ssh,cat /etc/ssh/keys-root/authorized_keys
+ESXI_65_000031,2,not a finding,password complexity: upper case character,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
+ESXI_65_000032,2,not a finding,password complexity: 5 generations,password   sufficient   /lib/security/$ISA/pam_unix.so use_authtok nullok shadow sha512 remember=5,,ssh,"grep -i ""^password"" /etc/pam.d/passwd | grep sufficient"
+ESXI_65_000033,2,not a finding,password complexity: use sha512 for password hash,password   sufficient   /lib/security/$ISA/pam_unix.so use_authtok nullok shadow sha512 remember=5,,ssh,"grep -i ""^password"" /etc/pam.d/passwd | grep sufficient"
+ESXI_65_000034,2,not a finding,disable managed object browser,FALSE,,advanced,Config.HostAgent.plugins.solo.enableMob
+ESXI_65_000035,2,not a finding,ssh: not running,FALSE,,powercli,"(Get-VMHostService -VMhost $vmh| ? {$_.key -eq ""TSM-SSH""}).running"
+ESXI_65_000036,2,not a finding,esx shell: not running,FALSE,,powercli,"(Get-VMHostService -VMhost $vmh| ? {$_.key -eq ""TSM""}).running"
+ESXI_65_000038,2,n/a,Enable vshpere authentication proxy when using host profiles,deferred 2020-07-01: not using host profiles,,n/a,deferred 2020-07-01: not using host profiles
+ESXI_65_000041,2,not a finding,Enable 10 minute timeout for interactive esx shell,600,,advanced,UserVars.ESXiShellInteractiveTimeOut
+ESXI_65_000042,2,not a finding,Enable 10 minute timeout for esx shell,600,,advanced,UserVars.ESXiShellTimeOut
+ESXI_65_000043,2,not a finding,Enable 10 minute timeout for DCUI,600,,advanced,UserVars.DcuiTimeOut
+ESXI_65_000045,2,not a finding,The ESXi host must enable a persistent log location for all locally stored logs.,TRUE,,esxcli,($esxcli.system.syslog.config.get()).locallogoutputispersistent
+ESXI_65_000046ntpserver,2,not a finding,NTP: server configuration,"ntp101.domain.com,ntp201.domain.com",,powercli,"(get-vmhostntpserver -vmhost $vmh) -join "","""
+ESXI_65_000046ntpservicepolicy,2,not a finding,NTP: service policy,on,,powercli,"(get-vmhostservice -vmhost $vmh | ? {$_.key -match ""ntp""}).policy"
+ESXI_65_000046ntpservicerunning,2,not a finding,NTP: service running,TRUE,,powercli,"(get-vmhostservice -vmhost $vmh | ? {$_.key -match ""ntp""}).running"
+ESXI_65_000047,2,not a finding,VIB Acceptance Level,PartnerSupported,,esxcli,$esxcli.software.acceptance.Get()
+ESXI_65_000048,2,not a finding,vmotion traffic isolated/dedicated vlan,manual check required,,manual,manual check required
+ESXI_65_000049,2,not a finding,mgmt traffic isolated/dedicated vlan,manual check required,,manual,manual check required
+ESXI_65_000050,2,n/a,ip-based storage traffic isolated/dedicated,"permanent exemption, not using ip based storge",,n/a,"permanent exemption, not using ip based storge"
+ESXI_65_000053snmpenable,2,open,configure snmp,TRUE,,esxcli,($esxcli.system.snmp.get()).enable
+ESXI_65_000053snmpstring,2,open,configuresnmp,snmpreadstring,,esxcli,($esxcli.system.snmp.get()).communities
+ESXI_65_000056,2,open,disable allip access via firewall,deferred 2020-11-01,,n/a,defer until 2020-11-01
+ESXI_65_000057,2,not a finding,incoming and outgoing firewall enabled,TRUE,,powercli,"$fwpol = get-vmhostfirewalldefaultpolicy -vmhost $vmh ; if ($fwpol -contains $true) {""false""} else {""true""}"
+ESXI_65_000059vpg,2,not a finding,vpg: reject forged transmits,TRUE,,powercli,"$vpgforged = get-virtualportgroup -VMHost $vmh | get-securitypolicy | select forgedtransmits ; if ($vssforged -contains $true) {""false""} else {""true""}"
+ESXI_65_000059vss,2,not a finding,vss: reject forged transmits,TRUE,,powercli,"$vssforged = get-virtualswitch -VMHost $vmh | get-securitypolicy | select forgedtransmits ; if ($vssforged -contains $true) {""false""} else {""true""}"
+ESXI_65_000060vog,2,not a finding,vpg: reject mac address change,TRUE,,powercli,"$vpgmacchanges = get-virtualportgroup -VMHost $vmh | get-securitypolicy | select macchanges ; if ($vpgmacchanges -contains $true) {""false""} else {""true""}"
+ESXI_65_000060vss,2,not a finding,vss: reject mac address change,TRUE,,powercli,"$vssmacchanges = get-virtualswitch -VMHost $vmh | get-securitypolicy | select macchanges ; if ($vssmacchanges -contains $true) {""false""} else {""true""}"
+ESXI_65_000061vpg,2,not a finding,vpg: reject allow promiscuous,TRUE,,powercli,"$vpgAllowPromiscuous = get-virtualportgroup -VMHost $vmh | get-securitypolicy | select AllowPromiscuous ; if ($vssAllowPromiscuous -contains $true) {""false""} else {""true""}"
+ESXI_65_000061vss,2,not a finding,vss: reject allow promiscuous,TRUE,,powercli,"$vssAllowPromiscuous = get-virtualswitch -VMHost $vmh | get-securitypolicy | select AllowPromiscuous ; if ($vssAllowPromiscuous -contains $true) {""false""} else {""true""}"
+ESXI_65_000062,2,not a finding,prevent use of dvfilter network api,NULL,,advanced,Net.DVFilterBindIpAddress
+ESXI_65_000063,2,open,port groups must not use native vlan,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000064,2,not a finding,portgroups must not use vlan 4095,TRUE,,powercli,"$vpglist = get-virtualportgroup -vmhost $vmh ; if ($vpglist.vlanid -contains '4095') {""false""} else {""true""}"
+ESXI_65_000065,2,not a finding,portgroups must not use upstream vlans,manual check required,,manual,manual check required
+ESXI_65_000066,2,not a finding,dont use dtp on trunk ports to esx,manual check required,,manual,manual check required
+ESXI_65_000068,2,not a finding,esx configured for only required vlans,manual check required,,manual,manual check required
+ESXI_65_000070,2,open,disable root access to cim based hardware monitoring,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000071,2,not a finding,verify installation media,manual check required,,manual,manual check required
+ESXI_65_000072,1,not a finding,all security patches and updates installed,manual check required,,manual,manual check required
+ESXI_65_000073,2,open,The ESXi host must enable TLS 1.2 exclusively for the SFCB service.,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000074,2,open,"The ESXi host must exclusively enable TLS 1.2 for the ioFilter, vSANVP and reverse proxy services.",defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000075,2,open,The ESXi host must exclusively enable TLS 1.2 for the authd service.,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_000076,2,not a finding,enable secure boot,Enabled,,ssh,/usr/lib/vmware/secureboot/bin/secureBoot.py -s
+ESXI_65_000078,2,n/a,use dod certificates,permanent exemption: not using DoD certs,,n/a,permanent exemption: not useing DoD certs
+ESXI_65_100001,2,open,Enable lockdown mode,defer until 2020-07-01,,n/a,defer until 2020-07-01
+ESXI_65_100004,2,not a finding,Enable syslog to remote host,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_100007,2,not a finding,display notice and consent banner: banner,"This system is for the use of authorized users only. Individuals using this computer
+system without authority or in excess of their authority are subject to having all
+of their activities on this system monitored and recorded by system personnel.
+Anyone using this system expressly consents to such monitoring and is advised
+that if such monitoring reveals possible evidence of criminal activity system
+personnel may provide the evidence of such monitoring to law enforcement officials.",,advanced,Annotations.WelcomeMessage
+ESXI_65_100010,2,not a finding,ssh ciphers,"Ciphers aes128-ctr,aes192-ctr,aes256-ctr",,ssh,"grep ""^Ciphers"" /etc/ssh/sshd_config"
+ESXI_65_100031,2,not a finding,password complexity: lower case character,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
+ESXI_65_100035,2,not a finding,ssh: not running,FALSE,,powercli,"(Get-VMHostService -VMhost $vmh| Where {$_.key -eq ""TSM-SSH""}).running"
+ESXI_65_100038,2,n/a,Enable vshpere authentication proxy when using host profiles,deferred 2020-07-01: not using host profiles,,n/a,deferred 2020-07-01: not using host profiles
+ESXI_65_100041,2,not a finding,Enable 10 minute timeout for interactive esx shell,600,,advanced,UserVars.ESXiShellInteractiveTimeOut
+ESXI_65_100042,2,not a finding,Enable 10 minute timeout for esx shell,600,,advanced,UserVars.ESXiShellTimeOut
+ESXI_65_100043,2,not a finding,Enable 10 minute timeout for DCUI,600,,advanced,UserVars.DcuiTimeOut
+ESXI_65_100046ntpserver,2,not a finding,NTP: server configuration,"ntp101.domain.com,ntp201.domain.com",,powercli,"(get-vmhostntpserver -vmhost $vmh) -join "","""
+ESXI_65_100046ntpservicepolicy,2,not a finding,NTP: service policy,on,,powercli,"(get-vmhostservice -vmhost $vmh | ? {$_.key -match ""ntp""}).policy"
+ESXI_65_100046ntpservicerunning,2,not a finding,NTP: service running,TRUE,,powercli,"(get-vmhostservice -vmhost $vmh | ? {$_.key -match ""ntp""}).running"
+ESXI_65_100047,2,not a finding,VIB Acceptance Level,PartnerSupported,,esxcli,$esxcli.software.acceptance.Get()
+ESXI_65_200004,2,not a finding,Enable syslog to remote host,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_200031,2,not a finding,password complexity: upper case character,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
+ESXI_65_200035,2,not a finding,ssh: not running,FALSE,,powercli,"(Get-VMHostService -VMhost $vmh| Where {$_.key -eq ""TSM-SSH""}).running"
+ESXI_65_200038,2,n/a,Enable vshpere authentication proxy when using host profiles,deferred 2020-07-01: not using host profiles,,n/a,deferred 2020-07-01: not using host profiles
+ESXI_65_200047,2,not a finding,VIB Acceptance Level,PartnerSupported,,esxcli,$esxcli.software.acceptance.Get()
+ESXI_65_300004,2,not a finding,Enable syslog to remote host,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_300031,2,not a finding,password complexity: upper case character,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
+ESXI_65_300038,2,n/a,Enable vshpere authentication proxy when using host profiles,deferred 2020-07-01: not using host profiles,,n/a,deferred 2020-07-01: not using host profiles
+ESXI_65_400004,2,not a finding,Configure syslog,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_400031,2,not a finding,password complexity: 15 character minimum,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
+ESXI_65_500004,2,not a finding,Enable syslog to remote host,udp://syslog.domain.com:514,,advanced,Syslog.global.loghost
+ESXI_65_500031,2,not a finding,password complexity: at least one special character,"similar=deny retry=3 min=disabled,disabled,disabled,disabled,15",,advanced,Security.PasswordQualityControl
